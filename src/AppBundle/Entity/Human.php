@@ -10,15 +10,29 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="user")
+ */
 class Human
 {
-    
+    /**
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     */
     private $firstName;
 
+    /**
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     */
     private $lastName;
 
+    /**
+     * @ORM\Column(type="date")
+     * @Assert\NotBlank()
+     */
     private $birthday;
 
     /**
@@ -44,10 +58,6 @@ class Human
     {
         $this->birthday = $birthday;
     }
-
-
-
-
 
     public function getFirstName()
     {
