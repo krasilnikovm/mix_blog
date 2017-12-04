@@ -15,8 +15,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="user")
  * @UniqueEntity(fields="email", message="Email already taken")
- * @UniqueEntity(fields="username", message="Username already taken")
  */
 class User extends Human implements UserInterface
 {
@@ -33,12 +33,6 @@ class User extends Human implements UserInterface
      * @Assert\Email()
      */
     private $email;
-
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     * @Assert\NotBlank()
-     */
-    private $username;
 
     /**
      * @Assert\NotBlank()
