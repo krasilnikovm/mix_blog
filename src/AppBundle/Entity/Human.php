@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tanja
- * Date: 03.12.2017
- * Time: 14:46
- */
 
 namespace AppBundle\Entity;
 
@@ -12,8 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="user")
+ * @ORM\MappedSuperclass
  */
 class Human
 {
@@ -36,7 +29,23 @@ class Human
     private $birthday;
 
     /**
-     * @param mixed $firstName
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param integer $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @param string $firstName
      */
     public function setFirstName($firstName)
     {
@@ -44,7 +53,7 @@ class Human
     }
 
     /**
-     * @param mixed $lastName
+     * @param string $lastName
      */
     public function setLastName($lastName)
     {
