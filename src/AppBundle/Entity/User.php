@@ -40,6 +40,11 @@ class User extends Human implements UserInterface
     private $password;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $avatar;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -78,6 +83,24 @@ class User extends Human implements UserInterface
     {
         $this->password = $password;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param mixed $avatar
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+    }
+
+
 
     public function getPassword()
     {
