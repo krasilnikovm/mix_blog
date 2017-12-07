@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tanja
- * Date: 03.12.2017
- * Time: 14:45
- */
 
 namespace AppBundle\Entity;
 
@@ -15,7 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="user")
+ * @ORM\Table(name="users")
  * @UniqueEntity(fields="email", message="Email already taken")
  */
 class User extends Human implements UserInterface
@@ -41,9 +35,6 @@ class User extends Human implements UserInterface
     private $plainPassword;
 
     /**
-     * The below length depends on the "algorithm" you use for encoding
-     * the password, but this works well with bcrypt.
-     *
      * @ORM\Column(type="string", length=64)
      */
     private $password;
