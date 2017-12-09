@@ -27,6 +27,9 @@ class RegistrationController extends Controller
                 ->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
+            $user->setAvatar("");
+            $user->setAdmin(false);
+
             // 4) save the User!
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
