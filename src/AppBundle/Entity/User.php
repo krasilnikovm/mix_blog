@@ -23,22 +23,10 @@ class User extends Human implements UserInterface
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     */
-    private $email;
-
-    /**
      * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
-    private $plainPassword;
-
-    /**
-     * @ORM\Column(type="string", length=64)
-     */
-    private $password;
+    protected $plainPassword;
 
     /**
      * @ORM\Column(type="string", options={"default":""})
@@ -67,6 +55,7 @@ class User extends Human implements UserInterface
 
     public function __construct()
     {
+        parent::__construct();
         $this->posts = new ArrayCollection();
         $this->bookMarks = new ArrayCollection();
         $this->comments = new ArrayCollection();
