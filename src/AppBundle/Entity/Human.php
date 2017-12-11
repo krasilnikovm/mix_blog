@@ -4,11 +4,12 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\MappedSuperclass
  */
-class Human
+class Human extends BaseUser
 {
     /**
      * @ORM\Column(type="string", length=100)
@@ -28,21 +29,12 @@ class Human
      */
     private $birthday;
 
-    /**
-     * @return mixed
-     */
-    public function getId()
+
+    public function __construct()
     {
-        return $this->id;
+        parent::__construct();
     }
 
-    /**
-     * @param integer $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
 
     /**
      * @param string $firstName
