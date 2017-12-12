@@ -13,21 +13,39 @@ class Human extends BaseUser
 {
     /**
      * @ORM\Column(type="string", length=100)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *     message="Пожалуйста, введите имя",
+     *     groups={"Registration", "Profile"})
+     * @Assert\Length(
+     *     min=3,
+     *     max=100,
+     *     minMessage="Имя слишком короткое"
+     *     maxMessage="Имя слишком длинное"
+     *     groups={"Registration", "Profile"}
+     * )
      */
-    private $firstName;
+    protected $firstName;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(
+     *     message="Пожалуйста, введите фамилию",
+     *     groups={"Registration", "Profile"})
+     * @Assert\Length(
+     *     min=3,
+     *     max=255,
+     *     minMessage="Имя слишком короткое"
+     *     maxMessage="Имя слишком длинное"
+     *     groups={"Registration", "Profile"}
+     * )
      */
-    private $lastName;
+    protected $lastName;
 
     /**
      * @ORM\Column(type="date")
      * @Assert\NotBlank()
      */
-    private $birthday;
+    protected $birthday;
 
 
     public function __construct()
