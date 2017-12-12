@@ -19,8 +19,8 @@ class Human extends BaseUser
      * @Assert\Length(
      *     min=3,
      *     max=100,
-     *     minMessage="Имя слишком короткое"
-     *     maxMessage="Имя слишком длинное"
+     *     minMessage="Имя слишком короткое",
+     *     maxMessage="Имя слишком длинное",
      *     groups={"Registration", "Profile"}
      * )
      */
@@ -34,8 +34,8 @@ class Human extends BaseUser
      * @Assert\Length(
      *     min=3,
      *     max=255,
-     *     minMessage="Имя слишком короткое"
-     *     maxMessage="Имя слишком длинное"
+     *     minMessage="Имя слишком короткое",
+     *     maxMessage="Имя слишком длинное",
      *     groups={"Registration", "Profile"}
      * )
      */
