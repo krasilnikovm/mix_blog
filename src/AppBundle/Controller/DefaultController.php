@@ -16,6 +16,23 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/posts/{page}", name="posts", defaults={ "page": 1})
+     */
+    public function postsAction($page)
+    {
+        $countRecords = 5;
+        $offset = 1 * ($page - 1) * $countRecords;
+        $posts = $this->getDoctrine()
+            ->getRepository('AppBundle:Post')
+            ->findBy([],[], $countRecords, $offset );
+
+        if(!$posts) {
+            throw $this->createNotFoundException("Not found page with number " . $page );
+        }
+
+        return $this->render(':default:posts.html.twig', ['posts' => $posts]);
+    }
+    /**
      * @Route("/post/{id}", name="post")
      */
     public function postAction($id)
