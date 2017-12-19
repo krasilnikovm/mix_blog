@@ -16,10 +16,24 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/signin", name="sign_in")
+     * @Route("/post/{id}", name="post")
      */
-    public function signInAction()
+    public function postAction($id)
     {
-        return $this->render(':default:signin.html.twig');
+        $post = $this->getDoctrine()
+            ->getRepository('AppBundle:Post')
+            ->find($id);
+
+
+        if(!$post) {
+            throw $this->createNotFoundException("No post with id " . $id);
+        }
+
+        return $this->render(
+            ":default:post.html.twig", [
+                'article' => $post->getArticle(),
+                'title' => $post->getTitle(),
+                'author' => $post->getUser()->getUserName()]);
     }
+
 }
