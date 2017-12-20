@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="users")
  * @UniqueEntity(fields="email", message="Email already taken")
  */
-class User extends Human implements UserInterface
+class User extends Human
 {
     /**
      * @ORM\Id
@@ -29,14 +29,14 @@ class User extends Human implements UserInterface
     protected $plainPassword;
 
     /**
-     * @ORM\Column(type="string", options={"default":""})
+     * @ORM\Column(type="string", nullable=true, options={"default":""})
      */
     private $avatar;
 
     /**
-     * @ORM\Column(type="boolean", options={"default":false})
+     * @ORM\Column(type="boolean",  options={"default":false})
      */
-    private $admin;
+    private $admin = false;
 
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="user")
@@ -128,34 +128,6 @@ class User extends Human implements UserInterface
     {
         $this->admin = $admin;
     }
-
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function getRoles()
-    {
-        return ['ROLE_USER'];
-    }
-
-    public function getSalt()
-    {
-        return password_hash($this->getPassword(), PASSWORD_DEFAULT);
-    }
-
-    public function getUsername()
-    {
-        return $this->getEmail();
-    }
-
-    public function eraseCredentials()
-    {
-        $this->setPlainPassword($this->getSalt());
-    }
-
-
 
     /**
      * Get admin
