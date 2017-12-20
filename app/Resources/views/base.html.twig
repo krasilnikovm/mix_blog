@@ -6,8 +6,8 @@
     <title></title>
     <meta name="keywords" content="" />
     <meta name="description" content="" />
-    <link href="{{ asset('bundles/framework/css/reset.css') }}" rel="stylesheet">
-    <link href="{{ asset('bundles/framework/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/reset.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -19,21 +19,27 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/">Mk Blog</a>
+                    <a class="navbar-brand" href="{{ path('homepage') }}">Mk Blog</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Записи</a></li>
+                    <li><a href="{{ path('posts') }}">Записи</a></li>
                 </ul>
-
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href=""><i class="fa fa-user"></i> Регистрация</a></li>
-                    <li><a href="#"><i class="fa fa-sign-in" ></i> Авторизация</a></li>
+                {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <li><a href="{{ path('fos_user_registration_register') }}"><i class="fa fa-user"></i> Регистрация</a></li>
+                    <li><a href="{{ path('fos_user_security_login') }}"><i class="fa fa-sign-in" ></i> Авторизация</a></li>
+                {% else %}
+                    <li><a href="{{ path('fos_user_profile_show') }}"><i class="fa fa-user"></i>Профиль</a></li>
+                    <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-user"></i>выход</a></li>
+                {% endif %}
                 </ul>
             </div>
         </nav>
     </header><!-- .header-->
 
-    {% block content %} {% endblock %}
+    <div class="container">
+        {% block content %} {% endblock  %}
+    </div>
 
 </div><!-- .wrapper -->
 
