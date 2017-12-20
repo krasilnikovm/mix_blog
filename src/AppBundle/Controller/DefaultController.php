@@ -26,12 +26,19 @@ class DefaultController extends Controller
             ->getRepository('AppBundle:Post')
             ->findBy([],[], $countRecords, $offset );
 
+        $paginator = $this->get('knp_paginator'); //(1)
+        $target = $posts; //(2) array('a', 'b', ... 'u');
+        // uses event subscribers to paginate $target
+        $slice = $paginator->paginate($target, $page/*page*/, $countRecords/*limit*/); //(3)
+        // $slice is a pagination view, represents the paginated data
         if(!$posts) {
             throw $this->createNotFoundException("Not found page with number " . $page );
         }
 
-        return $this->render(':default:posts.html.twig', ['posts' => $posts]);
+
+        return $this->render(':default:posts.html.twig', ['posts' => $posts, 'pagination' => $slice]);
     }
+
     /**
      * @Route("/post/{id}", name="post")
      */
