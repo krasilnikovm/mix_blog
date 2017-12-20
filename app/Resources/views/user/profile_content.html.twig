@@ -1,0 +1,25 @@
+<h1 style="text-align:center;">Профиль</h1>
+<div  style="width: 50%; margin:auto;" class="">
+
+    <img class="img-rounded img-responsive"
+         style="margin: auto;"
+         width="200"
+         height="200"
+         src="http://www.danielmorlock.de/wp-content/uploads/2011/12/github-logo.png"
+         alt="">
+
+    <div class="" style="text-align:center;">
+        <p><b>Имя:</b> {{ user.firstName }}</p>
+        <p><b>Фамилия:</b> {{ user.lastName }} </p>
+        <p><b>Э-почта:</b> {{ user.email }} </p>
+        <p><b>Дата рождения:</b> {{ user.birthday | date('d/m/Y') }} </p>
+    </div>
+
+    <div>
+
+
+    </div>
+
+
+
+</div>
