@@ -1,7 +1,13 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+<h1>Регистрация</h1>
 {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-    {{ form_widget(form) }}
+    {{ form_row(form.firstName, {'attr': {'class':'form-control', 'placeholder': 'Имя'}}) }}
+    {{ form_row(form.lastName, {'attr': {'class':'form-control', 'placeholder': 'Фамилия'}}) }}
+    {{ form_row(form.email, {'attr': {'class':'form-control', 'placeholder': 'Э-почта'}}) }}
+    {{ form_row(form.username, {'attr': {'class':'form-control', 'placeholder': 'Имя пользователя'}}) }}
+    {{ form_row(form.plainPassword, {'attr': {'class':'form-control'}}) }}
+    {{ form_row(form.birthday) }}
     <div>
         <input class="btn btn-default" type="submit" value="{{ 'registration.submit'|trans }}" />
     </div>
