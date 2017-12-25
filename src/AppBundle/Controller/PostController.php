@@ -27,7 +27,7 @@ class PostController extends Controller
         }
 
 
-        return $this->render(':default:posts.html.twig', ['posts' => $pages]);
+        return $this->render(':post:posts.html.twig', ['posts' => $pages]);
     }
 
     /**
@@ -45,7 +45,7 @@ class PostController extends Controller
         }
 
         return $this->render(
-            ":default:post.html.twig", [
+            ":post:post.html.twig", [
             'article' => $post->getArticle(),
             'title' => $post->getTitle(),
             'author' => $post->getUser()->getUserName()]);
