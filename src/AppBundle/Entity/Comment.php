@@ -3,19 +3,20 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\CommentBundle\Entity\Comment as BaseComment;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="comments")
  */
-class Comment
+class Comment extends BaseComment
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
@@ -38,6 +39,11 @@ class Comment
      * @ORM\Column(type="datetime")
      */
     private $date;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="MyProject\MyBundle\Entity\Thread")
+     */
+    protected $thread;
 
 
 
