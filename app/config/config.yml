@@ -101,4 +101,8 @@ fos_comment:
             thread: AppBundle\Entity\Thread
 
 assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
     bundles: [ "FOSCommentBundle" ]
+    filters:
+        cssrewrite: ~
