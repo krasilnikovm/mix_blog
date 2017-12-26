@@ -1,7 +1,14 @@
 {% extends 'base.html.twig' %}
-
+{% block script %}
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
+{% endblock %}
 {% block content %}
     <h1>{{ title }}</h1>
     <p> {{ article }}</p>
     <div class=""> <p>Автор: {{ author }}</p> </div>
+
+    {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': id } %}
 {% endblock %}
