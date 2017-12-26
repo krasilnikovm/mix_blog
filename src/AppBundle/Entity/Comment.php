@@ -4,12 +4,13 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\CommentBundle\Entity\Comment as BaseComment;
-
+use FOS\CommentBundle\Model\SignedCommentInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity
  * @ORM\Table(name="comments")
  */
-class Comment extends BaseComment
+class Comment extends BaseComment implements SignedCommentInterface
 {
     /**
      * @ORM\Id
@@ -18,35 +19,19 @@ class Comment extends BaseComment
      */
     protected $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
-     * @ORM\JoinColumn(name="id_user", referencedColumnName="id")
-     */
-    private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
-     * @ORM\JoinColumn(name="id_post", referencedColumnName="id")
-     */
-    private $post;
-
-    /**
-     * @ORM\Column(type="string", length=200)
-     */
-    private $message;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $date;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="MyProject\MyBundle\Entity\Thread")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Thread")
      */
     protected $thread;
 
-
-
+    /**
+     * Author of the comment
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @var User
+     */
+    protected $author;
 
     /**
      * Get id
@@ -58,99 +43,23 @@ class Comment extends BaseComment
         return $this->id;
     }
 
-    /**
-     * Set message
-     *
-     * @param string $message
-     *
-     * @return Comment
-     */
-    public function setMessage($message)
+    public function setAuthor(UserInterface $author)
     {
-        $this->message = $message;
-
-        return $this;
+        $this->author = $author;
     }
 
-    /**
-     * Get message
-     *
-     * @return string
-     */
-    public function getMessage()
+    public function getAuthor()
     {
-        return $this->message;
+        return $this->author;
     }
 
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     *
-     * @return Comment
-     */
-    public function setDate($date)
+    public function getAuthorName()
     {
-        $this->date = $date;
+        if (null === $this->getAuthor()) {
+            return 'Anonymous';
+        }
 
-        return $this;
+        return $this->getAuthor()->getUsername();
     }
 
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * Set user
-     *
-     * @param \AppBundle\Entity\User $user
-     *
-     * @return Comment
-     */
-    public function setUser(\AppBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * Set post
-     *
-     * @param \AppBundle\Entity\Post $post
-     *
-     * @return Comment
-     */
-    public function setPost(\AppBundle\Entity\Post $post = null)
-    {
-        $this->post = $post;
-
-        return $this;
-    }
-
-    /**
-     * Get post
-     *
-     * @return \AppBundle\Entity\Post
-     */
-    public function getPost()
-    {
-        return $this->post;
-    }
 }
