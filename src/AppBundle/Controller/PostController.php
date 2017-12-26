@@ -46,6 +46,7 @@ class PostController extends Controller
 
         return $this->render(
             ":post:post.html.twig", [
+                'id' => $post->getId(),
             'article' => $post->getArticle(),
             'title' => $post->getTitle(),
             'author' => $post->getUser()->getUserName()]);
