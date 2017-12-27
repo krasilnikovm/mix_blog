@@ -55,15 +55,10 @@ class Post
      */
     private $usersLikes;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
-     */
-    private $comments;
 
     public function __construct()
     {
         $this->usersLikes = new ArrayCollection();
-        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -148,10 +143,6 @@ class Post
     }
 
 
-
-
-
-
     /**
      * Set user
      *
@@ -210,37 +201,4 @@ class Post
         return $this->usersLikes;
     }
 
-    /**
-     * Add comment
-     *
-     * @param \AppBundle\Entity\Comment $comment
-     *
-     * @return Post
-     */
-    public function addComment(\AppBundle\Entity\Comment $comment)
-    {
-        $this->comments[] = $comment;
-
-        return $this;
-    }
-
-    /**
-     * Remove comment
-     *
-     * @param \AppBundle\Entity\Comment $comment
-     */
-    public function removeComment(\AppBundle\Entity\Comment $comment)
-    {
-        $this->comments->removeElement($comment);
-    }
-
-    /**
-     * Get comments
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
 }

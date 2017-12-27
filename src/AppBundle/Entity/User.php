@@ -48,17 +48,13 @@ class User extends Human
      */
     private $bookMarks;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
-     */
-    private $comments;
+
 
     public function __construct()
     {
         parent::__construct();
         $this->posts = new ArrayCollection();
         $this->bookMarks = new ArrayCollection();
-        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -209,37 +205,4 @@ class User extends Human
         return $this->bookMarks;
     }
 
-    /**
-     * Add comment
-     *
-     * @param \AppBundle\Entity\Comment $comment
-     *
-     * @return User
-     */
-    public function addComment(\AppBundle\Entity\Comment $comment)
-    {
-        $this->comments[] = $comment;
-
-        return $this;
-    }
-
-    /**
-     * Remove comment
-     *
-     * @param \AppBundle\Entity\Comment $comment
-     */
-    public function removeComment(\AppBundle\Entity\Comment $comment)
-    {
-        $this->comments->removeElement($comment);
-    }
-
-    /**
-     * Get comments
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
 }
