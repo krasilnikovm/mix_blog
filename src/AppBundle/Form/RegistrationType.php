@@ -20,7 +20,7 @@ class RegistrationType extends AbstractType
         $builder
             ->add('firstName', TextType::class, ['label' => false])
             ->add('lastName', TextType::class, ['label' => false])
-            ->add('birthday', BirthdayType::class, [ 'label' => false, 'widget' => 'choice']);
+            ->add('birthday', BirthdayType::class, [ 'label' => "Дата Рождения: ", 'widget' => 'choice']);
     }
 
     public function getName()
