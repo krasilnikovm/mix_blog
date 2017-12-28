@@ -2,8 +2,16 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Post;
+use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PostController extends Controller
 {
@@ -31,7 +39,7 @@ class PostController extends Controller
     }
 
     /**
-     * @Route("/post/{id}", name="post")
+     * @Route("/post/{id}", name="post", requirements={"id"="\d+"})
      */
     public function postAction($id)
     {
@@ -50,5 +58,43 @@ class PostController extends Controller
             'article' => $post->getArticle(),
             'title' => $post->getTitle(),
             'author' => $post->getUser()->getUserName()]);
+    }
+
+    /**
+     * @Route("/post/new", name="adding_post")
+     */
+    public function creatingPostAction(Request $request)
+    {
+        $admin = $this->getUser();
+
+        if (!$admin->hasRole('ROLE_ADMIN')) {
+           throw $this->createNotFoundException("Page Not Found");
+        }
+        $post = new Post();
+
+        $form = $this->createFormBuilder($post)
+            ->add('title', TextType::class)
+            ->add('article', TextareaType::class)
+            ->add('create', SubmitType::class, array('label' => 'Добавить'))
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $post->setCountLikes(0);
+            $post->setDate(new DateTime());
+            $post->setUser($admin);
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($post);
+
+            $em->flush();
+
+            return $this->render('post/post_success.html.twig');
+        }
+
+        return $this->render(':post:post_form.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 }
