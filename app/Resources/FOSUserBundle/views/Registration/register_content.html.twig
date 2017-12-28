@@ -6,7 +6,8 @@
     {{ form_row(form.lastName, {'attr': {'class':'form-control', 'placeholder': 'Фамилия'}}) }}
     {{ form_row(form.email, {'attr': {'class':'form-control', 'placeholder': 'Э-почта'}}) }}
     {{ form_row(form.username, {'attr': {'class':'form-control', 'placeholder': 'Имя пользователя'}}) }}
-    {{ form_row(form.plainPassword, {'attr': {'class':'form-control'}}) }}
+    {{ form_row(form.plainPassword.first, {'attr': {'class':'form-control', 'placeholder': 'Пароль'}}) }}
+    {{ form_row(form.plainPassword.second, {'attr': {'class':'form-control', 'placeholder': 'Повторите пароль'}}) }}
     {{ form_row(form.birthday) }}
     <div>
         <input class="btn btn-default" type="submit" value="{{ 'registration.submit'|trans }}" />
