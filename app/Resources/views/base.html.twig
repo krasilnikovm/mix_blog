@@ -24,6 +24,9 @@
                 </div>
                 <ul class="nav navbar-nav">
                     <li><a href="{{ path('posts') }}">Записи</a></li>
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <li><a href={{ path('adding_post')}}>Добавить пост</a></li>
+                    {% endif%}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                 {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
