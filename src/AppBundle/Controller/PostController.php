@@ -97,4 +97,24 @@ class PostController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    /**
+    * @Route("/post/remove/{id}", name="remove_post", requirements={"id"="\d+"})
+    **/
+    public function removePost($id)
+    {
+        $user = $this->getUser();
+
+        if ( $user === null || !$user->hasRole('ROLE_ADMIN')) {
+           throw $this->createNotFoundException("Page Not Found");
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $post = $em->getRepository('AppBundle:Post')->find($id);
+        $em->remove($post);
+        $em->flush();
+
+        return $this->redirectToRoute('posts');
+    }
 }
