@@ -7,6 +7,9 @@
                 <h1><a href="{{ path('post', {'id': post.id}) }}">{{ post.title }}</a></h1>
                 <p>{{ post.article }}</p>
                 <div class=""> <p>Автор: {{ post.user.username }}</p> </div>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class=""> <a href="{{path('remove_post', {'id': post.id}) }}">Удалить</a> </div>
+                {% endif %}
             </div>
         {% endfor %}
     </div>
@@ -15,4 +18,3 @@
         {{ knp_pagination_render(posts) }}
     </div>
 {% endblock %}
-
