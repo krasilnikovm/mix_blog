@@ -9,6 +9,7 @@
                 <div class=""> <p>Автор: {{ post.user.username }}</p> </div>
                 {% if is_granted('ROLE_ADMIN') %}
                     <div class=""> <a href="{{path('remove_post', {'id': post.id}) }}">Удалить</a> </div>
+                    <div class=""> <a href="{{path('edit_post', {'id': post.id}) }}">Изменить</a> </div>
                 {% endif %}
             </div>
         {% endfor %}
