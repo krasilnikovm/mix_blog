@@ -75,7 +75,7 @@ class PostController extends Controller
         $form = $this->createFormBuilder($post)
             ->add('title', TextType::class)
             ->add('article', TextareaType::class)
-            ->add('create', SubmitType::class, array('label' => 'Добавить'))
+            ->add('button', SubmitType::class, array('label' => 'Добавить'))
             ->getForm();
 
         $form->handleRequest($request);
@@ -93,7 +93,7 @@ class PostController extends Controller
             return $this->render('post/post_success.html.twig');
         }
 
-        return $this->render(':post:post_form.html.twig', array(
+        return $this->render(':post:post_form_content.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -116,5 +116,41 @@ class PostController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('posts');
+    }
+
+    /**
+    * @Route("/post/edit/{id}", name="edit_post", requirements={"id"="\d+"})
+    */
+    public function editPostAction($id, Request $request)
+    {
+      $user = $this->getUser();
+
+      if ($user == null || !$user->hasRole('ROLE_ADMIN')) {
+        throw $this->createNotFoundException("Page not found");
+      }
+
+      $em = $this->getDoctrine()->getManager();
+
+      $post = $em->getRepository(Post::class)->find($id);
+
+      $form = $this->createFormBuilder($post)
+          ->add('title', TextType::class, ['data' => $post->getTitle()])
+          ->add('article', TextareaType::class, ['data' => $post->getArticle()])
+          ->add('button', SubmitType::class, array('label' => 'Изменить'))
+          ->getForm();
+
+      $form->handleRequest($request);
+
+      if ($form->isSubmitted() && $form->isValid()) {
+
+          $em->persist($post);
+          $em->flush();
+
+          return $this->render('post/post_success.html.twig');
+      }
+
+      return $this->render(':post:post_form_edit_content.html.twig', array(
+          'form' => $form->createView(),
+      ));
     }
 }
