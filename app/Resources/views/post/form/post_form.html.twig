@@ -1,0 +1,14 @@
+{{ form_start(form) }}
+    {{ form_row(form.title, { 'attr' : {
+        'class': 'form-control',
+        'placeholder': 'Заголовок'}}) }}
+
+    {{ form_row(form.article, { 'attr' : {
+        'class': 'form-control',
+        'placeholder': 'Статья'}}) }}
+
+{{ form_row(form.button, { 'attr' : {
+    'class': 'btn btn-primary'}}) }}
+
+
+{{ form_end(form) }}
