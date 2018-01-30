@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Post;
+use AppBundle\Form\EditPostType;
+use AppBundle\Form\AddingPostType;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
 
 class PostController extends Controller
 {
@@ -24,7 +27,7 @@ class PostController extends Controller
         $countRecords = 5;
         $posts = $this->getDoctrine()
             ->getRepository('AppBundle:Post')
-            ->findAll();
+            ->findAll(array(), array('date' => 'desc'));
 
         $paginator = $this->get('knp_paginator'); //(1)
 
@@ -70,13 +73,10 @@ class PostController extends Controller
         if (!$admin->hasRole('ROLE_ADMIN')) {
            throw $this->createNotFoundException("Page Not Found");
         }
+
         $post = new Post();
 
-        $form = $this->createFormBuilder($post)
-            ->add('title', TextType::class)
-            ->add('article', TextareaType::class)
-            ->add('button', SubmitType::class, array('label' => 'Добавить'))
-            ->getForm();
+        $form = $this->createForm(AddingPostType::class, $post);
 
         $form->handleRequest($request);
 
@@ -133,11 +133,7 @@ class PostController extends Controller
 
       $post = $em->getRepository(Post::class)->find($id);
 
-      $form = $this->createFormBuilder($post)
-          ->add('title', TextType::class, ['data' => $post->getTitle()])
-          ->add('article', TextareaType::class, ['data' => $post->getArticle()])
-          ->add('button', SubmitType::class, array('label' => 'Изменить'))
-          ->getForm();
+      $form = $this->createForm(EditPostType::class, $post, ['post' => $post]);
 
       $form->handleRequest($request);
 
