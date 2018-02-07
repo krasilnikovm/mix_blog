@@ -33,7 +33,7 @@ class Post
     /**
      * @ORM\Column(type="integer")
      */
-    private $countLikes;
+    private $countLikes = 0;
 
     /**
      * @ORM\Column(type="string", length=150)
