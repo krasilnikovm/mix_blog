@@ -16,3 +16,10 @@ services:
             class: AppBundle\Form\ProfileType
             tags:
                 - { name: form.type, alias: app_user_profile }
+
+    admin.post:
+            class: AppBundle\Admin\PostAdmin
+            arguments: [~, AppBundle\Entity\Post, ~]
+            tags:
+                - { name: sonata.admin, manager_type: orm, label: Post }
+            public: true
